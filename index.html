@@ -28,6 +28,8 @@
   body.locked{overflow:hidden;height:100%;}
   html:has(body.locked){overflow:hidden;height:100%;}
   *{box-sizing:border-box;}
+  [hidden]{display:none!important}
+  body{margin:0}
 
   /* ---------- Cover (the lace doors) ---------- */
   .cover{position:fixed;inset:0;z-index:50;display:flex;justify-content:center;background:var(--outside);
@@ -74,7 +76,7 @@
       linear-gradient(180deg,var(--paper-2),var(--paper) 30%,var(--paper) 80%,var(--paper-2));
     box-shadow:0 0 40px rgba(110,78,58,.12);}
   /* each "page" of the invitation is one screen; a button moves to the next */
-  .screen{position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  .screen{position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;
     text-align:center;gap:18px;padding:64px 24px calc(84px + env(safe-area-inset-bottom,0px));overflow-y:auto;
     opacity:0;visibility:hidden;transform:translateX(26px) scale(.985);
     transition:opacity .55s ease,transform .7s cubic-bezier(.3,.1,.2,1),visibility 0s linear .7s;}
@@ -99,11 +101,11 @@
     box-shadow:0 4px 12px rgba(110,78,58,.12),inset 0 1px 0 rgba(255,255,255,.8);transition:transform .2s ease,box-shadow .2s ease;}
   .next-btn:hover{transform:translateY(-1px);box-shadow:0 6px 16px rgba(110,78,58,.18),inset 0 1px 0 rgba(255,255,255,.8)}
   .next-btn svg{width:14px;height:14px;animation:nudge 1.8s ease-in-out infinite}
-  .corner{position:absolute;width:190px;height:230px;pointer-events:none;z-index:1}
+  .corner{position:absolute;width:min(60vw,240px);height:auto;aspect-ratio:240/340;pointer-events:none;z-index:1;overflow:visible}
   .corner.tl{top:0;left:0}
   .corner.br{bottom:0;right:0;transform:rotate(180deg)}
   .arch{position:relative;width:min(84%,340px,calc((100svh - 170px) * 300 / 470));aspect-ratio:300/470;max-width:100%;}
-  .arch svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+  .arch > svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
   .arch-content{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
     text-align:center;padding:26% 10% 8%;gap:14px;}
   .eyebrow{font-size:12px;letter-spacing:.34em;text-transform:uppercase;color:var(--ink-soft);font-weight:500;margin:0;}
@@ -151,6 +153,73 @@
   .btn svg{width:14px;height:14px}
 
   .sprig{width:150px;height:60px;flex:none}
+  .screen > :first-child{margin-top:auto}
+  .screen > :last-child{margin-bottom:auto}
+
+  /* ---------- framed cards (location, game, wishes) ---------- */
+  .card{position:relative;width:min(100%,340px);padding:34px 22px 26px;flex:none;
+    background:linear-gradient(180deg,rgba(250,242,234,.8),rgba(244,231,220,.8));
+    border:1px solid #CDB09A;border-radius:170px 170px 18px 18px / 110px 110px 18px 18px;
+    box-shadow:0 10px 26px rgba(110,78,58,.12),inset 0 0 0 6px rgba(250,242,234,.9),inset 0 0 0 7px rgba(205,176,154,.75);
+    display:flex;flex-direction:column;align-items:center;gap:16px;}
+  .card.plain{border-radius:26px;padding-top:30px}
+  .card .ornament{margin-top:-4px}
+  .sec-title{font:400 36px/1 var(--serif);margin:6px 0 0;color:var(--ink);letter-spacing:.01em}
+  .script-title{font-family:"Pinyon Script","Great Vibes",cursive;font-weight:400;font-size:40px;line-height:1.15;margin:4px 0 0;color:var(--ink)}
+  .lead{margin:0;font-size:17px;line-height:1.45;color:var(--ink-soft);max-width:28ch;text-wrap:balance}
+
+  .map-window{display:block;position:relative;width:100%;aspect-ratio:1/1.02;overflow:hidden;
+    border-radius:50% 50% 16px 16px / 34% 34% 16px 16px;border:5px solid var(--ivory);
+    box-shadow:0 0 0 1px #CDB09A,0 6px 16px rgba(110,78,58,.18);background:#E9DCCF;}
+  .map-window iframe{position:absolute;inset:-2px;width:calc(100% + 4px);height:calc(100% + 4px);border:0;pointer-events:none;
+    filter:sepia(.4) saturate(.7) contrast(.95) brightness(1.04);}
+  .map-fallback{position:absolute;inset:0;display:grid;place-items:center;align-content:center;gap:8px;color:var(--accent);font:italic 400 16px var(--serif);background:repeating-linear-gradient(35deg,transparent 0 22px,rgba(205,176,154,.25) 22px 23px),repeating-linear-gradient(-55deg,transparent 0 30px,rgba(205,176,154,.2) 30px 31px),#EFE2D6}
+  .map-fallback svg{width:30px;height:30px}
+  .map-window::after{content:"";position:absolute;inset:0;pointer-events:none;box-shadow:inset 0 0 34px rgba(120,88,66,.28);}
+  .plaque{position:relative;z-index:1;margin-top:-38px;padding:10px 24px 11px;background:var(--ivory);border:1px solid #CDB09A;border-radius:12px;
+    box-shadow:inset 0 0 0 3px var(--ivory),inset 0 0 0 4px rgba(205,176,154,.7),0 4px 12px rgba(110,78,58,.16);}
+  .plaque b{display:block;font:500 23px/1.15 var(--serif);color:var(--ink)}
+  .plaque span{display:block;font-size:14px;color:var(--ink-soft);margin-top:2px}
+  .addr{margin:-4px 0 0;font-size:14px;letter-spacing:.06em;color:var(--ink-soft)}
+  .dir-btn{display:inline-flex;align-items:center;gap:10px;padding:10px 24px 10px 12px;border-radius:999px;border:1px solid #CDB09A;
+    background:linear-gradient(180deg,#FBF4EE,#F1E2D5);color:var(--ink);text-decoration:none;
+    font:600 14px var(--serif);letter-spacing:.22em;text-transform:uppercase;
+    box-shadow:inset 0 0 0 3px #FBF4EE,inset 0 0 0 4px rgba(205,176,154,.55),0 4px 12px rgba(110,78,58,.14);}
+  .dir-btn i{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;border:1px solid #CDB09A;background:var(--ivory)}
+  .dir-btn svg{width:14px;height:14px}
+  .dir-btn:focus-visible,.solid-btn:focus-visible,.opt:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+
+  .field{width:100%;padding:13px 16px;border:1px solid #CDB09A;border-radius:12px;background:rgba(252,248,244,.95);
+    font:italic 400 18px var(--serif);color:var(--ink);text-align:center;box-shadow:inset 0 1px 3px rgba(110,78,58,.08);}
+  .field::placeholder{color:#B39884}
+  .field:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(169,131,95,.18)}
+  textarea.field{min-height:132px;resize:none;text-align:left;font-style:normal;font-size:18px;line-height:1.45;
+    background-image:repeating-linear-gradient(180deg,transparent 0 25px,rgba(205,176,154,.35) 25px 26px);background-attachment:local;}
+  .solid-btn{width:100%;padding:13px 26px;border-radius:999px;border:0;cursor:pointer;color:#FFF8F1;
+    background:linear-gradient(180deg,#BA9577,#9F7C60);font:600 14px var(--serif);letter-spacing:.24em;text-transform:uppercase;
+    box-shadow:0 6px 16px rgba(120,88,66,.25),inset 0 1px 0 rgba(255,255,255,.3);transition:transform .2s ease,opacity .2s ease}
+  .solid-btn:hover{transform:translateY(-1px)}
+  .solid-btn:disabled{opacity:.6;cursor:default;transform:none}
+  .form-note{min-height:1.2em;margin:-4px 0 0;font-size:15px;font-style:italic;color:var(--ink-soft)}
+  .form-note.err{color:#9A4B3C}
+  .hp{position:absolute!important;left:-9999px;width:1px;height:1px;opacity:0}
+  .stack{display:flex;flex-direction:column;align-items:center;gap:14px;width:100%}
+
+  .q-progress{margin:0;font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:var(--ink-soft)}
+  .q-bar{width:100%;height:2px;background:rgba(205,176,154,.4);border-radius:2px;overflow:hidden}
+  .q-bar i{display:block;height:100%;background:var(--accent);transition:width .4s ease}
+  .q-text{margin:0;font:italic 400 25px/1.25 var(--serif);color:var(--ink);text-wrap:balance;min-height:2.5em;display:grid;place-items:center}
+  .opts{display:grid;grid-template-columns:1fr 1fr;gap:12px;width:100%}
+  .opt{padding:14px 6px 12px;border:1px solid #CDB09A;border-radius:60px 60px 12px 12px;cursor:pointer;
+    background:linear-gradient(180deg,#FCF8F4,#F3E6DA);color:var(--ink);
+    font:400 30px/1.1 "Pinyon Script","Great Vibes",cursive;box-shadow:0 3px 10px rgba(110,78,58,.1);
+    transition:transform .2s ease,background .2s ease}
+  .opt:hover{transform:translateY(-2px);background:#FFFCF9}
+  .picks{list-style:none;margin:0;padding:0;width:100%;display:flex;flex-direction:column;gap:6px;text-align:left}
+  .picks li{display:flex;justify-content:space-between;gap:10px;padding:6px 2px;border-bottom:1px solid rgba(205,176,154,.45);font-size:15px;color:var(--ink-soft)}
+  .picks li b{font:400 20px/1 "Pinyon Script",cursive;color:var(--ink);white-space:nowrap}
+  .thanks-mark{width:54px;height:54px;border-radius:50%;display:grid;place-items:center;border:1px solid #CDB09A;background:var(--ivory);color:var(--accent)}
+  .thanks-mark svg{width:22px;height:22px}
 
   @media (prefers-reduced-motion: reduce){
     .seal,.next-btn svg{animation:none}
@@ -172,6 +241,20 @@
       <feComposite in2="o2" operator="in" result="hl"/>
       <feMerge><feMergeNode in="sh"/><feMergeNode in="hl"/><feMergeNode in="SourceGraphic"/></feMerge>
     </filter>
+    <filter id="emb2" x="-15%" y="-15%" width="130%" height="130%" color-interpolation-filters="sRGB">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="2.2" result="soft"/>
+      <feOffset in="soft" dx="1.6" dy="2.6" result="so"/>
+      <feFlood flood-color="#7A5A46" flood-opacity=".26"/>
+      <feComposite in2="so" operator="in" result="drop"/>
+      <feGaussianBlur in="SourceAlpha" stdDeviation="0.6" result="b"/>
+      <feOffset in="b" dx="1" dy="1.2" result="o1"/>
+      <feFlood flood-color="#8F6B55" flood-opacity=".55"/>
+      <feComposite in2="o1" operator="in" result="sh"/>
+      <feOffset in="b" dx="-0.7" dy="-0.8" result="o2"/>
+      <feFlood flood-color="#FFFFFF" flood-opacity=".95"/>
+      <feComposite in2="o2" operator="in" result="hl"/>
+      <feMerge><feMergeNode in="drop"/><feMergeNode in="sh"/><feMergeNode in="hl"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
   </defs>
 </svg>
 
@@ -185,8 +268,8 @@
 </div>
 
 <main class="page" id="page">
-  <svg class="corner tl" id="cornerTL" viewBox="0 0 190 230" aria-hidden="true"></svg>
-  <svg class="corner br" id="cornerBR" viewBox="0 0 190 230" aria-hidden="true"></svg>
+  <svg class="corner tl" id="cornerTL" viewBox="0 0 240 340" aria-hidden="true"></svg>
+  <svg class="corner br" id="cornerBR" viewBox="0 0 240 340" aria-hidden="true"></svg>
 
   <button class="back-btn" id="backBtn" type="button" aria-label="Previous page" hidden>
     <svg viewBox="0 0 14 14" aria-hidden="true"><path d="M9 2 L4 7 L9 12" fill="none" stroke="currentColor" stroke-width="1.3"/></svg>
@@ -240,16 +323,77 @@
     <button class="next-btn" type="button">Continue <svg viewBox="0 0 14 14" aria-hidden="true"><path d="M5 2 L10 7 L5 12" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></button>
   </section>
 
-  <section class="screen" aria-label="Venue">
-    <p class="eyebrow">The venue</p>
-    <h2 class="venue-name">Solitaire Hall</h2>
-    <p class="venue-addr">Armed Forces Officers' Club<br>Maadi, Cairo</p>
-    <a class="btn" href="https://maps.app.goo.gl/jWFFDtz7WV6qgF8R9" target="_blank" rel="noopener">
-      <svg viewBox="0 0 14 14" aria-hidden="true"><path d="M7 13s-4.5-4.2-4.5-7.3a4.5 4.5 0 0 1 9 0C11.5 8.8 7 13 7 13z" fill="none" stroke="currentColor" stroke-width="1.1"/><circle cx="7" cy="5.8" r="1.6" fill="currentColor"/></svg>
-      Get directions
-    </a>
+  <section class="screen" aria-label="Location">
+    <div class="card">
+      <h2 class="sec-title">Location</h2>
+      <svg class="ornament" viewBox="0 0 120 14" aria-hidden="true">
+        <path d="M0 7 H48 M72 7 H120" stroke="currentColor" stroke-width=".8"/>
+        <path d="M60 1 l6 6 -6 6 -6 -6z" fill="none" stroke="currentColor" stroke-width=".9"/>
+        <circle cx="60" cy="7" r="1.6" fill="currentColor"/>
+      </svg>
+      <a class="map-window" href="https://maps.app.goo.gl/jWFFDtz7WV6qgF8R9" target="_blank" rel="noopener" aria-label="Open Solitaire Hall in Google Maps">
+        <span class="map-fallback" aria-hidden="true"><svg viewBox="0 0 14 14"><path d="M7 13s-4.5-4.2-4.5-7.3a4.5 4.5 0 0 1 9 0C11.5 8.8 7 13 7 13z" fill="none" stroke="currentColor" stroke-width=".9"/><circle cx="7" cy="5.8" r="1.6" fill="currentColor"/></svg>Tap to open the map</span>
+        <iframe id="mapFrame" title="Map of Solitaire Hall, Maadi" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+          data-src="https://maps.google.com/maps?q=Solitaire%20Hall%2C%20Armed%20Forces%20Officers%20Club%2C%20Maadi%2C%20Cairo&z=16&output=embed"></iframe>
+      </a>
+      <div class="plaque"><b>Solitaire Hall</b><span>Armed Forces Officers' Club</span></div>
+      <p class="addr">Maadi, Cairo</p>
+      <a class="dir-btn" href="https://maps.app.goo.gl/jWFFDtz7WV6qgF8R9" target="_blank" rel="noopener">
+        <i><svg viewBox="0 0 14 14" aria-hidden="true"><path d="M7 13s-4.5-4.2-4.5-7.3a4.5 4.5 0 0 1 9 0C11.5 8.8 7 13 7 13z" fill="none" stroke="currentColor" stroke-width="1.1"/><circle cx="7" cy="5.8" r="1.6" fill="currentColor"/></svg></i>
+        Get directions
+      </a>
+    </div>
     <button class="next-btn" type="button">Continue <svg viewBox="0 0 14 14" aria-hidden="true"><path d="M5 2 L10 7 L5 12" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></button>
   </section>
+
+  <section class="screen" aria-label="How well do you know us">
+    <div class="card" id="quizCard">
+      <div class="stack" id="quizStart">
+        <h2 class="script-title">How well do you know us?</h2>
+        <p class="lead">Write your name to start the game. Your answers will be sent to Mohamed &amp; Omnia.</p>
+        <label class="hp" for="quizName">Your full name</label>
+        <input class="field" id="quizName" type="text" autocomplete="name" placeholder="Your full name" maxlength="60">
+        <button class="solid-btn" id="quizGo" type="button">Start the game</button>
+        <p class="form-note" id="quizNote" role="status"></p>
+      </div>
+      <div class="stack" id="quizPlay" hidden>
+        <p class="q-progress" id="qProg">Question 1 of 6</p>
+        <div class="q-bar"><i id="qBar" style="width:0%"></i></div>
+        <p class="q-text" id="qText"></p>
+        <div class="opts" id="qOpts"></div>
+      </div>
+      <div class="stack" id="quizEnd" hidden>
+        <div class="thanks-mark"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></div>
+        <h2 class="script-title" id="quizThanks">Thank you!</h2>
+        <ul class="picks" id="quizPicks"></ul>
+        <p class="form-note" id="quizSent" role="status"></p>
+      </div>
+    </div>
+    <button class="next-btn" type="button">Continue <svg viewBox="0 0 14 14" aria-hidden="true"><path d="M5 2 L10 7 L5 12" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></button>
+  </section>
+
+  <section class="screen" aria-label="Send your wishes">
+    <div class="card">
+      <form class="stack" id="wishForm" novalidate>
+        <h2 class="script-title">Send your wishes</h2>
+        <p class="lead">Mohamed &amp; Omnia would be happy to receive your congratulations.</p>
+        <label class="hp" for="wishName">Your name</label>
+        <input class="field" id="wishName" name="name" type="text" autocomplete="name" placeholder="Your name" maxlength="60">
+        <label class="hp" for="wishMsg">Your message</label>
+        <textarea class="field" id="wishMsg" name="message" placeholder="Write your message…" maxlength="1000"></textarea>
+        <input class="hp" id="wishTrap" name="botcheck" type="checkbox" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <button class="solid-btn" id="wishSend" type="submit">Send</button>
+        <p class="form-note" id="wishNote" role="status"></p>
+      </form>
+      <div class="stack" id="wishDone" hidden>
+        <div class="thanks-mark"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></div>
+        <h2 class="script-title">Thank you</h2>
+        <p class="lead" id="wishThanks">Your wishes are on their way to Mohamed &amp; Omnia.</p>
+      </div>
+    </div>
+    <button class="next-btn" type="button">Continue <svg viewBox="0 0 14 14" aria-hidden="true"><path d="M5 2 L10 7 L5 12" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></button>
+  </section>
+
 
   <section class="screen closing" aria-label="Closing">
     <svg class="sprig" data-sprig="2" viewBox="0 0 150 60" aria-hidden="true"></svg>
@@ -377,18 +521,57 @@
     document.getElementById('sealArt').innerHTML='<g filter="url(#emb)">'+g+'</g>';
   }
 
+  /* fern-like frond: a curved stem with paired leaflets that shrink toward the tip */
+  function frond(x,y,len,ang,bend,step){
+    var g='<g transform="translate('+j(x,2)+' '+j(y,2)+') rotate('+j(ang,8)+')">';
+    g+='<path d="M0 0 Q'+f(bend*len)+' '+f(-len/2)+' 0 '+f(-len)+'" fill="none" stroke="'+C.stem+'" stroke-width="1.1"/>';
+    step=step||.085;
+    for(var t=.1;t<.95;t+=step){
+      var px=2*t*(1-t)*bend*len,py=-len*t,dir=Math.atan(2*(1-2*t)*bend)*180/Math.PI,s=len*.14*(1-t*.55);
+      g+=leaf(px,py,s,dir-58,.4)+leaf(px,py,s,dir+58,.4);
+    }
+    g+='<ellipse cx="0" cy="'+f(-len-2)+'" rx="1.8" ry="3" fill="'+C.petal+'" stroke="'+C.edge+'" stroke-width=".4"/>';
+    return g+'</g>';
+  }
+  /* a spray of tiny buds on short side-stems */
+  function spray(x,y,len,ang){
+    var g='<g transform="translate('+x+' '+y+') rotate('+ang+')">';
+    g+='<path d="M0 0 Q'+f(len*.1)+' '+f(-len/2)+' 0 '+f(-len)+'" fill="none" stroke="'+C.stem+'" stroke-width=".9"/>';
+    [.3,.45,.6,.75,.9].forEach(function(t,i){
+      var px=2*t*(1-t)*.1*len,py=-len*t,sd=i%2?1:-1,bx=f(px+sd*len*.13),by=f(py-len*.07);
+      g+='<path d="M'+f(px)+' '+f(py)+' L'+bx+' '+by+'" stroke="'+C.stem+'" stroke-width=".7"/>';
+      g+='<circle cx="'+bx+'" cy="'+by+'" r="'+f(1.5+rnd()*.9)+'" fill="'+C.petal+'" stroke="'+C.edge+'" stroke-width=".35"/>';
+    });
+    g+='<circle cx="0" cy="'+f(-len-1.5)+'" r="2" fill="'+C.petal+'" stroke="'+C.edge+'" stroke-width=".35"/>';
+    return g+'</g>';
+  }
+  /* hydrangea-like cluster of small blossoms */
+  function cluster(x,y,R,n){
+    var pts=[];
+    for(var i=0;i<n;i++){var a=rnd()*Math.PI*2,d=Math.sqrt(rnd())*R;pts.push([x+Math.cos(a)*d,y+Math.sin(a)*d,R*(.34+rnd()*.14)]);}
+    pts.sort(function(p,q){return p[1]-q[1];});
+    return pts.map(function(p){return blossom(p[0],p[1],p[2]);}).join('');
+  }
+
+  /* dense sculpted lace for the page corners (240 x 340 units, corner at 0,0) */
+  function cornerArt(){
+    var back='',mid='',front='';
+    back+=frond(60,48,125,128,.18)+frond(92,28,112,100,.12)+frond(30,84,150,166,-.1)+frond(10,120,185,178,.07)
+        +frond(122,18,84,82,-.15)+frond(44,62,96,146,.22)+frond(150,10,70,96,.1);
+    back+=spray(104,40,62,115)+spray(40,112,72,150)+spray(142,12,54,92)+spray(18,200,60,172)+spray(76,92,58,135);
+    mid+=cluster(30,28,28,10)+cluster(72,80,18,7)+cluster(16,152,17,6)+cluster(130,40,15,6)+cluster(12,236,13,5)+cluster(170,22,11,4);
+    front+=rose(46,40,29,10)+rose(100,22,19,-20)+rose(22,102,21,30)+rose(80,68,14,0)+rose(12,300,12,20);
+    front+=blossom(122,66,8)+blossom(56,120,7)+blossom(152,32,6)+blossom(8,192,7)+blossom(20,272,6)+blossom(176,14,5)+blossom(98,100,6);
+    return back+mid+front;
+  }
+
   function buildCorners(){
     rnd=seed(31);
-    var g=sprig(96,34,40,70)+sprig(30,110,40,190)+leaf(70,30,22,40)+leaf(22,34,20,-60)+leaf(110,64,18,120)+leaf(58,92,20,160)+leaf(6,70,18,-100);
-    g+=pearls(110,84,130,100,140,130,9,.8);
-    g+=rose(44,48,26,10)+rose(94,22,16,-20)+rose(16,112,14,30)+blossom(78,86,8)+blossom(124,44,7)+blossom(10,160,6)+blossom(140,12,5);
-    var s='<g filter="url(#emb)">'+g+'</g>';
-    document.getElementById('cornerTL').innerHTML=s;
+    document.getElementById('cornerTL').innerHTML='<g filter="url(#emb2)">'+cornerArt()+'</g>';
     rnd=seed(47);
-    document.getElementById('cornerBR').innerHTML='<g filter="url(#emb)">'+
-      sprig(96,34,40,70)+sprig(30,110,40,190)+leaf(70,30,22,40)+leaf(22,34,20,-60)+leaf(110,64,18,120)+leaf(58,92,20,160)+
-      rose(44,48,26,10)+rose(94,22,16,-20)+rose(16,112,14,30)+blossom(78,86,8)+blossom(124,44,7)+'</g>';
+    document.getElementById('cornerBR').innerHTML='<g filter="url(#emb2)">'+cornerArt()+'</g>';
   }
+
 
   function buildSprigs(){
     document.querySelectorAll('svg[data-sprig]').forEach(function(s,i){
@@ -408,6 +591,7 @@
   function openInvite(){
     if(opened) return; opened=true;
     cover.classList.add('open');
+    var mf=document.getElementById('mapFrame'); if(mf&&!mf.src) mf.src=mf.dataset.src;
     setTimeout(function(){cover.hidden=true;},2400);
   }
   cover.addEventListener('click',openInvite);
@@ -456,6 +640,89 @@
     setTimeout(tick,1000);
   }
   tick();
+
+  /* ---------- messages to the couple's inbox (Web3Forms; the email address never appears in this page) ---------- */
+  var WEB3FORMS_KEY='a2c173fc-5e21-4d6b-9b9e-74fcdad1a79f';
+  function sendMail(data){
+    if(!WEB3FORMS_KEY||WEB3FORMS_KEY.indexOf('PASTE')===0) return Promise.reject(new Error('not connected'));
+    data.access_key=WEB3FORMS_KEY;
+    data.from_name='Mohamed & Omnia Invitation';
+    return fetch('https://api.web3forms.com/submit',{method:'POST',
+      headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(data)})
+      .then(function(r){return r.json();})
+      .then(function(res){if(!res.success) throw new Error(res.message||'failed'); return res;});
+  }
+  function $(id){return document.getElementById(id);}
+
+  /* ---------- "How well do you know us?" game ---------- */
+  var QUIZ=['Who fell in love first?','Who is always running late?','Who says sorry first after an argument?',
+            'Who is the better cook?','Who spends more time on the phone?','Who will plan the honeymoon?'];
+  var OPTS=['Mohamed','Omnia'];
+  var player='',qi=0,picks=[];
+  function showQ(){
+    $('qProg').textContent='Question '+(qi+1)+' of '+QUIZ.length;
+    $('qBar').style.width=(qi/QUIZ.length*100)+'%';
+    $('qText').textContent=QUIZ[qi];
+    var box=$('qOpts'); box.innerHTML='';
+    OPTS.forEach(function(o){
+      var b=document.createElement('button'); b.type='button'; b.className='opt'; b.textContent=o;
+      b.addEventListener('click',function(){picks.push(o); qi++; qi<QUIZ.length?showQ():endQuiz();});
+      box.appendChild(b);
+    });
+  }
+  function sendQuiz(){
+    var note=$('quizSent'); note.className='form-note'; note.textContent='Sending your answers…';
+    var lines=QUIZ.map(function(q,i){return q+' → '+picks[i];}).join('\n');
+    sendMail({subject:'Game answers from '+player,name:player,message:lines})
+      .then(function(){note.textContent='Your answers were sent to Mohamed & Omnia.';})
+      .catch(function(){
+        note.className='form-note err';
+        note.innerHTML='';
+        note.appendChild(document.createTextNode('Your answers weren’t sent. Check your connection, then '));
+        var a=document.createElement('button'); a.type='button'; a.textContent='try again';
+        a.style.cssText='font:inherit;color:inherit;background:none;border:0;padding:0;text-decoration:underline;cursor:pointer';
+        a.addEventListener('click',sendQuiz); note.appendChild(a); note.appendChild(document.createTextNode('.'));
+      });
+  }
+  function endQuiz(){
+    $('quizPlay').hidden=true; $('quizEnd').hidden=false;
+    $('quizThanks').textContent='Thank you, '+player.split(' ')[0]+'!';
+    var ul=$('quizPicks'); ul.innerHTML='';
+    QUIZ.forEach(function(q,i){
+      var li=document.createElement('li'),s=document.createElement('span'),b=document.createElement('b');
+      s.textContent=q; b.textContent=picks[i]; li.appendChild(s); li.appendChild(b); ul.appendChild(li);
+    });
+    sendQuiz();
+  }
+  $('quizGo').addEventListener('click',function(){
+    player=$('quizName').value.trim();
+    if(!player){$('quizNote').className='form-note err';$('quizNote').textContent='Please write your name first.';$('quizName').focus();return;}
+    $('quizNote').textContent=''; qi=0; picks=[];
+    $('quizStart').hidden=true; $('quizPlay').hidden=false; showQ();
+  });
+  $('quizName').addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();$('quizGo').click();}});
+
+  /* ---------- wishes ---------- */
+  $('wishForm').addEventListener('submit',function(e){
+    e.preventDefault();
+    var name=$('wishName').value.trim(),msg=$('wishMsg').value.trim(),note=$('wishNote'),btn=$('wishSend');
+    note.className='form-note err';
+    if(!name){note.textContent='Please write your name.';$('wishName').focus();return;}
+    if(!msg){note.textContent='Please write your message.';$('wishMsg').focus();return;}
+    function done(){
+      $('wishForm').hidden=true; $('wishDone').hidden=false;
+      $('wishThanks').textContent='Thank you, '+name.split(' ')[0]+'. Your wishes are on their way to Mohamed & Omnia.';
+    }
+    if($('wishTrap').checked){done();return;}
+    btn.disabled=true; btn.textContent='Sending…'; note.className='form-note'; note.textContent='';
+    sendMail({subject:'Wedding wishes from '+name,name:name,message:msg})
+      .then(done)
+      .catch(function(){
+        btn.disabled=false; btn.textContent='Send';
+        note.className='form-note err'; note.textContent='Your message wasn’t sent. Check your connection and try again.';
+      });
+  });
+
 })();
 </script>
 </body>
