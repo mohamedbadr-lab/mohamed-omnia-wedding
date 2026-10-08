@@ -307,7 +307,7 @@
       <div class="side">November</div>
     </div>
     <p class="year">2026</p>
-    <p class="time">6:30 PM<em>in the evening</em></p>
+    <p class="time">5:00 PM<em>in the evening</em></p>
     <button class="next-btn" type="button">Continue <svg viewBox="0 0 14 14" aria-hidden="true"><path d="M5 2 L10 7 L5 12" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></button>
   </section>
 
@@ -624,7 +624,7 @@
   back.addEventListener('click',function(){go(cur-1);});
 
   /* ---------- countdown (Cairo, UTC+2 in November) ---------- */
-  var target=Date.UTC(2026,10,11,16,30,0);
+  var target=Date.UTC(2026,10,11,15,0,0);
   function pad(n){return (n<10?'0':'')+n;}
   function tick(){
     var ms=target-Date.now();
