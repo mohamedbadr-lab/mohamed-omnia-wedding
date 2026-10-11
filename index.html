@@ -6,7 +6,7 @@
 </head>
 <body>
 <title>Mohamed &amp; Omnia</title>
-<meta name="description" content="You are invited to the wedding of Mohamed & Omnia — Wednesday, 11 November 2026, Solitaire Hall, Maadi.">
+<meta name="description" content="You are invited to the wedding of Mohamed & Omnia — Wednesday, 11 November 2026, Armored Forces Officers' Club, Nasr City.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Pinyon+Script&display=swap">
@@ -178,9 +178,9 @@
   .map-window::after{content:"";position:absolute;inset:0;pointer-events:none;box-shadow:inset 0 0 34px rgba(120,88,66,.28);}
   .plaque{position:relative;z-index:1;margin-top:-38px;padding:10px 24px 11px;background:var(--ivory);border:1px solid #CDB09A;border-radius:12px;
     box-shadow:inset 0 0 0 3px var(--ivory),inset 0 0 0 4px rgba(205,176,154,.7),0 4px 12px rgba(110,78,58,.16);}
-  .plaque b{display:block;font:500 23px/1.15 var(--serif);color:var(--ink)}
+  .plaque b{display:block;font:500 21px/1.15 var(--serif);color:var(--ink);text-wrap:balance}
   .plaque span{display:block;font-size:14px;color:var(--ink-soft);margin-top:2px}
-  .addr{margin:-4px 0 0;font-size:14px;letter-spacing:.06em;color:var(--ink-soft)}
+  .addr{margin:-4px 0 0;font-size:14px;line-height:1.5;letter-spacing:.04em;color:var(--ink-soft)}
   .dir-btn{display:inline-flex;align-items:center;gap:10px;padding:10px 24px 10px 12px;border-radius:999px;border:1px solid #CDB09A;
     background:linear-gradient(180deg,#FBF4EE,#F1E2D5);color:var(--ink);text-decoration:none;
     font:600 14px var(--serif);letter-spacing:.22em;text-transform:uppercase;
@@ -307,7 +307,7 @@
       <div class="side">November</div>
     </div>
     <p class="year">2026</p>
-    <p class="time">5:00 PM<em>in the evening</em></p>
+    <p class="time">5:30 PM<em>in the evening</em></p>
     <button class="next-btn" type="button">Continue <svg viewBox="0 0 14 14" aria-hidden="true"><path d="M5 2 L10 7 L5 12" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></button>
   </section>
 
@@ -331,14 +331,14 @@
         <path d="M60 1 l6 6 -6 6 -6 -6z" fill="none" stroke="currentColor" stroke-width=".9"/>
         <circle cx="60" cy="7" r="1.6" fill="currentColor"/>
       </svg>
-      <a class="map-window" href="https://maps.app.goo.gl/jWFFDtz7WV6qgF8R9" target="_blank" rel="noopener" aria-label="Open Solitaire Hall in Google Maps">
+      <a class="map-window" href="https://maps.app.goo.gl/yVyTcdXDy4pydnXN6" target="_blank" rel="noopener" aria-label="Open the venue in Google Maps">
         <span class="map-fallback" aria-hidden="true"><svg viewBox="0 0 14 14"><path d="M7 13s-4.5-4.2-4.5-7.3a4.5 4.5 0 0 1 9 0C11.5 8.8 7 13 7 13z" fill="none" stroke="currentColor" stroke-width=".9"/><circle cx="7" cy="5.8" r="1.6" fill="currentColor"/></svg>Tap to open the map</span>
-        <iframe id="mapFrame" title="Map of Solitaire Hall, Maadi" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
-          data-src="https://maps.google.com/maps?q=Solitaire%20Hall%2C%20Armed%20Forces%20Officers%20Club%2C%20Maadi%2C%20Cairo&z=16&output=embed"></iframe>
+        <iframe id="mapFrame" title="Map of the Armored Forces Officers' Club, Nasr City" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+          data-src="https://maps.google.com/maps?q=Armored%20Forces%20Officers%20Club%2C%20Salah%20Salem%2C%20Nasr%20City%2C%20Cairo&z=16&output=embed"></iframe>
       </a>
-      <div class="plaque"><b>Solitaire Hall</b><span>Armed Forces Officers' Club</span></div>
-      <p class="addr">Maadi, Cairo</p>
-      <a class="dir-btn" href="https://maps.app.goo.gl/jWFFDtz7WV6qgF8R9" target="_blank" rel="noopener">
+      <div class="plaque"><b>Armored Forces Officers' Club</b><span>Dar Dobbat El-Modarraat</span></div>
+      <p class="addr">Salah Salem St., next to Cairo International Stadium<br>Nasr City, Cairo</p>
+      <a class="dir-btn" href="https://maps.app.goo.gl/yVyTcdXDy4pydnXN6" target="_blank" rel="noopener">
         <i><svg viewBox="0 0 14 14" aria-hidden="true"><path d="M7 13s-4.5-4.2-4.5-7.3a4.5 4.5 0 0 1 9 0C11.5 8.8 7 13 7 13z" fill="none" stroke="currentColor" stroke-width="1.1"/><circle cx="7" cy="5.8" r="1.6" fill="currentColor"/></svg></i>
         Get directions
       </a>
@@ -624,7 +624,7 @@
   back.addEventListener('click',function(){go(cur-1);});
 
   /* ---------- countdown (Cairo, UTC+2 in November) ---------- */
-  var target=Date.UTC(2026,10,11,15,0,0);
+  var target=Date.UTC(2026,10,11,15,30,0);
   function pad(n){return (n<10?'0':'')+n;}
   function tick(){
     var ms=target-Date.now();
